@@ -24,10 +24,10 @@ Claude Desktop과 통합되는 Stata .do 파일 관리 및 실행을 위한 Mode
 
 다음 구성으로 설치가 완료되었습니다:
 
-- **프로젝트 경로**: `/Users/myoungkyulee/projects/stata-mcp-server`
+- **프로젝트 경로**: `/Users/user_name/projects/stata-mcp-server`
 - **Stata 경로**: `/Applications/Stata/StataBE.app/Contents/MacOS/StataBE`
-- **작업 디렉토리**: `/Users/myoungkyulee/Documents/Stata`
-- **Claude Desktop 설정**: `/Users/myoungkyulee/Library/Application Support/Claude/claude_desktop_config.json`
+- **작업 디렉토리**: `/Users/user_name/Documents/Stata`
+- **Claude Desktop 설정**: `/Users/user_name/Library/Application Support/Claude/claude_desktop_config.json`
 
 ## 사용 방법
 
@@ -109,7 +109,7 @@ exit
 서버가 정상 작동하는지 확인:
 
 ```bash
-cd /Users/myoungkyulee/projects/stata-mcp-server
+cd /Users/user_name/projects/stata-mcp-server
 echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | node dist/index.js
 ```
 
@@ -125,7 +125,7 @@ echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | node dist/index.js
 
 1. **Claude Desktop에서 인식되지 않음**
    - Claude Desktop 완전 재시작
-   - 설정 파일 경로 확인: `/Users/myoungkyulee/Library/Application Support/Claude/claude_desktop_config.json`
+   - 설정 파일 경로 확인: `/Users/user_name/Library/Application Support/Claude/claude_desktop_config.json`
 
 2. **Stata 실행 실패**
    - Stata 경로 확인: `/Applications/Stata/StataBE.app/Contents/MacOS/StataBE`
@@ -139,7 +139,7 @@ echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | node dist/index.js
 
 ```bash
 # 서버 로그
-cd /Users/myoungkyulee/projects/stata-mcp-server
+cd /Users/user_name/projects/stata-mcp-server
 node dist/index.js 2> server.log
 
 # Stata 실행 로그
