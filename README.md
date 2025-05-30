@@ -1,174 +1,174 @@
 # Stata MCP Server (macOS)
 
-Claude Desktop과 통합되는 Stata .do 파일 관리 및 실행을 위한 Model Context Protocol (MCP) 서버입니다.
+A Model Context Protocol (MCP) server for managing and running Stata .do files that integrates with Claude Desktop.
 
-## 기능
+## Features
 
-### 📁 파일 관리
-- **browse_do_files**: 디렉토리의 .do 파일 목록 조회
-- **read_do_file**: .do 파일 읽기
-- **write_do_file**: .do 파일 생성 또는 덮어쓰기 (자동 백업 지원)
+### 📁 File management
+- **BROOK_Do_FILES**: Get a list of .do files in a directory
+- READ_FILE**: Read a .do file
+- WRITE_FILE**: Create or overwrite a .do file (supports automatic backup)
 
-### ✏️ 파일 편집
-- **edit_do_file**: .do 파일의 특정 섹션 편집
-  - 변수 추가 (`add_variable`)
-  - 분석 코드 추가 (`add_analysis`) 
-  - 사용자 정의 섹션 삽입 (`insert_section`)
+### ✏️ Edit a file
+- EDIT_FILE**: Edit a specific section of a .do file
+  - Add a variable (`add_variable`)
+  - Add analysis code (`add_analysis`) 
+  - Insert a custom section (`insert_section`)
 
-### 🚀 자동화
-- **generate_do_template**: AI를 활용한 .do 파일 템플릿 생성
-- **run_do_file**: Stata에서 .do 파일 실행 (macOS 지원)
-- **run_do_selected_lines**: 선택된 라인만 실행 ⭐ NEW!
+### 🚀 Automation.
+- generate_do_template**: Generate a .do file template using AI
+- run_do_file**: Run a .do file in Stata (macOS support)
+- run_do_selected_lines**: Run only selected lines ⭐ NEW!
 
-## 설치 완료 ✅
+## Installation complete ✅
 
-다음 구성으로 설치가 완료되었습니다:
+The installation is complete with the following configuration:
 
-- **프로젝트 경로**: `/Users/user_name/projects/stata-mcp-server`
-- **Stata 경로**: `/Applications/Stata/StataBE.app/Contents/MacOS/StataBE`
-- **작업 디렉토리**: `/Users/user_name/Documents/Stata`
-- **Claude Desktop 설정**: `/Users/user_name/Library/Application Support/Claude/claude_desktop_config.json`
+- **project path**: `/users/username/projects/stata-mcp-server`
+- **Stata path**: `/Applications/Stata/StataBE.app/Contents/MacOS/StataBE`
+- Working directory**: `/Users/username/Documents/Stata`
+- Cloud Desktop Settings**: `/Users/username/Library/Application Support/Claude/claude_desktop_config.json`
 
-## 사용 방법
+## How to use it.
 
-### 1. Claude Desktop 재시작
-Claude Desktop을 완전히 종료하고 다시 시작하세요.
+### 1. Restart Claude Desktop
+Completely shut down and restart Claude Desktop.
 
-### 2. Claude Desktop에서 사용
-
-```
-"test.do 파일을 읽어서 보여줘"
-
-"교육과 소득의 관계를 분석하는 do 파일을 만들어줘"
-
-"현재 디렉토리의 모든 do 파일 목록을 보여줘"
-
-"analysis.do 파일에 로지스틱 회귀분석을 추가해줘"
-
-"test_sample.do 파일의 10번째부터 15번째 라인만 실행해줘"
-
-"regression.do 파일의 회귀분석 부분만 따로 실행해줘"
-```
-
-### 3. 선택된 라인 실행 기능 ⭐
-
-이제 do 파일의 특정 라인들만 선택해서 실행할 수 있습니다:
+### 2. Enable in Claude Desktop
 
 ```
-"analysis.do 파일의 5번째부터 10번째 라인만 실행해줘"
-"데이터 로드 부분(라인 8-12)만 실행해서 테스트해줘"
+"Read the test.do file and show me"
+
+"Create a do file that analyzes the relationship between education and income"
+
+"Show me a list of all do files in the current directory"
+
+"Add a logistic regression to the analysis.do file"
+
+"Run only lines 10 through 15 of the test_sample.do file"
+
+"Run only the regression part of the regression.do file separately"
 ```
 
-이 기능은 다음과 같이 작동합니다:
-1. 지정된 라인 범위를 추출
-2. 임시 .do 파일 생성 (필요한 설정 자동 추가)
-3. Stata에서 임시 파일 실행
-4. 결과 반환 후 임시 파일 정리
+### 3. Run selected lines ⭐
 
-## Do 파일 템플릿 구조
+You can now select and run only certain lines of a do file:
+
+```
+"Run only lines 5 through 10 of the analysis.do file"
+"Run only the data load part (lines 8-12) to test"
+```
+
+This function works as follows
+1. extracts the specified line range
+2. creates a temporary .do file (automatically adding the necessary settings)
+3. run the temporary file in Stata
+4. clean up the temporary file after returning results
+
+## Do file template structure.
 
 ```stata
 /*******************************************************************************
-* 프로젝트: [분석 설명]
-* 작성일: [현재 날짜]
-* 작성자: Stata MCP Server (LLM Generated)
-* 목적: [분석 목적]
+* Project: [Analysis Description]
+* Created: [Current Date]
+* Author: Stata MCP Server (LLM generation)]
+* Purpose: [Analysis Purpose] [Analysis Purpose
 *******************************************************************************/
 
-* 초기 설정
-clear all
-set more off
-capture log close
-log using "logfile.log", replace
+* Initial Setup
+Clear all
+More settings
+Close capture logs
+Log using "logfile.log", replace
 
-* 데이터 로드
-* use "your_data.dta", clear
+* Load data
+* Use "your_data.dta", clear
 
-* 데이터 확인
-describe
+* Verify data
+描述
 summarize
 
-* 변수 생성 및 전처리
+* Create and preprocess variables
 * generate new_var = .
 
-* 기술통계
+* descriptive statistics
 * tabulate var1
 
-* 주요 분석
-* regress y x1 x2 x3
+* main analysis
+* regress Y X1 X2 X3
 
-* 결과 저장
-* outreg2 using "results.doc", replace
+* save results
+"results.doc" with * outreg2, replace
 
-log close
+Close the log
 exit
 ```
 
-## 테스트
+## Testing
 
-서버가 정상 작동하는지 확인:
+Verify that the server is working properly:
 
 ```bash
-cd /Users/user_name/projects/stata-mcp-server
+cd /users/username/projects/stata-mcp-server
 echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | node dist/index.js
 ```
 
-## 백업 시스템
+## Backup system
 
-- 파일 수정 시 자동 백업 생성
-- 백업 위치: `$STATA_WORKSPACE/.stata-backups/`
-- 형식: `filename.do.YYYY-MM-DDTHH-MM-SS-sssZ.bak`
+- Create automatic backups when files are modified
+- Backup location: `$STATA_WORKSPACE/.stata-backups/`
+- Format: Filename: `filename.do.YYYY-MM-DDTHH-MM-SS-sssZ.bak`
 
-## 문제 해결
+## Troubleshooting
 
-### 일반적인 문제
+### Common issues
 
-1. **Claude Desktop에서 인식되지 않음**
-   - Claude Desktop 완전 재시작
-   - 설정 파일 경로 확인: `/Users/user_name/Library/Application Support/Claude/claude_desktop_config.json`
+1. **Not recognized by Cloud Desktop** 1.
+   - Restart Cloud Desktop completely
+   - Check configuration file path: `/users/username/library/application support/Claude/claude_desktop_config.json`
 
-2. **Stata 실행 실패**
-   - Stata 경로 확인: `/Applications/Stata/StataBE.app/Contents/MacOS/StataBE`
-   - Stata 라이선스 확인
+2. **Stata fails to run
+   - Check Stata path: `/Applications/Stata/StataBE.app/Contents/MacOS/StataBE`
+   - Check Stata license
 
-3. **권한 오류**
-   - Documents/Stata 디렉토리 권한 확인
-   - 파일 읽기/쓰기 권한 확인
+3. **Permissions error
+   - Check Documents/Stata directory permissions
+   - Check file read/write permissions
 
-### 로그 확인
+### Check the log
 
 ```bash
-# 서버 로그
-cd /Users/user_name/projects/stata-mcp-server
+# Server logs
+cd /users/username/project/stata-mcp-server
 node dist/index.js 2> server.log
 
-# Stata 실행 로그
-# .log 파일이 각 .do 파일과 함께 생성됨
+# Stata execution log
+# .log files are generated with each .do file
 ```
 
-## 개발
+## Develop
 
-### 스크립트
+### Script
 ```bash
-npm run build      # TypeScript 컴파일
-npm run dev        # 개발 모드 (watch)
-npm run start      # 서버 시작
-npm run clean      # 빌드 파일 정리
+npm run build # compile typescript
+npm run dev # Development mode (watch)
+npm run start # Start the server
+npm run clean # Clean build files
 ```
 
-## 환경 변수
+## Environment variables
 
-- **STATA_PATH**: Stata 실행 파일 경로
-- **STATA_WORKSPACE**: Stata 작업 디렉토리
+- STATA_PATH**: Stata executable path
+- STATA_WORKSPACE**: Stata working directory
 
-## 라이선스
+## License
 
-MIT License
+MIT License.
 
----
+---.
 
-**Made with ❤️ for Sociology Research Team**
+**Created by the Sociology of Science Research Team ❤️ ** **
 
-**Stata MCP Server 설치 완료!** 🎉
+**Congratulations on your Stata MCP server installation!** 🎉 .
 
-Claude Desktop을 재시작하고 사용해보세요.
+Restart the Claude desktop and try it out.
